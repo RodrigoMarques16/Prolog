@@ -1,2 +1,5 @@
 # Logic Programming 
-## Fall 2018
+Fall 2018
+
+## Assignments 
+1. Symbollic Manipulator for polymonials
