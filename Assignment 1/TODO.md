@@ -19,4 +19,10 @@ Status of predicate implementation. Serves as documentation.
 
  - **normalize_mono(M, M2)**: Transforms M into the form Coefficient*Var^Exponent
 
+ - **add_mono(M1, M2, P)**: True if M3 is the sum of M1 with M2.
+
  - **polynomial(P)**: True if P is a sum of monomials.
+
+
+
+## Incomplete ##

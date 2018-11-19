@@ -99,18 +99,22 @@ polynomial(M+P) :- monomial(M), polynomial(P), !.
 polynomial(P-M) :- monomial(M), polynomial(P), !.
 
  
-% Sum two monomials with the same power
+%% addmono(M1, M2, M3)
+% 
+% True if M3 is the sum of M1 with M3.
+% If both monomials have the same var power the sum
+% results in a polynomial.
+%
 addmono(M1, M2, M3) :-
-    monparts(M1, K1, P1),
-    monparts(M2, K2, P1),
+    monparts(M1, K1, VP1),
+    monparts(M2, K2, VP1),
     K3 is K1+K2,
-    M3 = K3*P1, !.
+    M3 = K3*VP1, !.
 
-% Sum two monomials with different powers
 addmono(M1, M2, M3) :-
-    monparts(M1, _, P1),
-    monparts(M2, _, P2),
-    P1 \== P2,
+    monparts(M1, _, VP1),
+    monparts(M2, _, VP2),
+    VP1 \== VP2,
     M3 = M1+M2, !.
 
 % Multiply a monomial by a constant.
