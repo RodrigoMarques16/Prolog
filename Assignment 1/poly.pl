@@ -121,7 +121,7 @@ addmono(M1, M2, M3) :-
 %
 % True if M2 is M1 multiplied by the scalar K.
 %
-scalemono(M1, K, M2) :-
+scale_mono(M1, K, M2) :-
     monomial(M1),
     monparts(M1, K1, VP),
     K2 is K * K1,
@@ -130,11 +130,11 @@ scalemono(M1, K, M2) :-
 % Mutiply a polynomial by a constant.
 scalepoly(M1, K, M3) :-
     monomial(M1),
-    scalemono(M1, K, M2),
+    scale_mono(M1, K, M2),
     simpoly(M2, M3), !.
 scalepoly(P1+M1, K, P3) :-
     scalepoly(P1, K, P2),
-    scalemono(M1, K, M2), 
+    scale_mono(M1, K, M2), 
     simpoly(P2+M2, P3), !.
 
 % Sum two polynomials
