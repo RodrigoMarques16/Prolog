@@ -21,6 +21,8 @@ Status of predicate implementation. Serves as documentation.
 
  - **add_mono(M1, M2, P)**: True if M3 is the sum of M1 with M2.
 
+ - **scale_mono(M1, K, M2)**: True if M2 is M1 multiplied by K.
+
  - **polynomial(P)**: True if P is a sum of monomials.
 
 

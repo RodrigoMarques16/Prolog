@@ -117,12 +117,15 @@ addmono(M1, M2, M3) :-
     VP1 \== VP2,
     M3 = M1+M2, !.
 
-% Multiply a monomial by a constant.
+% scalemono(M1, K, M2)
+%
+% True if M2 is M1 multiplied by the scalar K.
+%
 scalemono(M1, K, M2) :-
     monomial(M1),
-    monparts(M1, K1, P1),
+    monparts(M1, K1, VP),
     K2 is K * K1,
-    M2 = K2 * P1, !.
+    M2 = K2 * VP, !.
 
 % Mutiply a polynomial by a constant.
 scalepoly(M1, K, M3) :-
