@@ -2,7 +2,8 @@
 
 Status of predicate implementation. Serves as documentation.
 
-## Complete ##
+## Base syntax ##
+
  - **pvars(L)**: list of variables to be used
 
  - **pvar(X)**: True if X is a variable.
@@ -12,7 +13,9 @@ Status of predicate implementation. Serves as documentation.
  - **varpower(VP, V, E)**: Extract var and exponent from var power. 
 
  - **coefficient(K)**: True if K Is a number.
-  
+
+## Monomials ##
+
  - **monomial(M)**: True if M is a monomial.
  
  - **monparts(M, K, V^E)**: Extracts coefficient, var and exponent from a monomial. 
@@ -25,8 +28,11 @@ Status of predicate implementation. Serves as documentation.
 
  - **scale_mono(M1, K, M2)**: True if M2 is M1 multiplied by K.
 
+## Polynomials ##
+
  - **polynomial(P)**: True if P is a sum of monomials.
 
-
-
 ## Incomplete ##
+
+ - **poly2list(P, L)**: Transforms polymonials into lists and vice-versa. 
+    - need to fix list to polymonial transformation

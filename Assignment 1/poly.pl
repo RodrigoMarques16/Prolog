@@ -147,6 +147,27 @@ polynomial(P+M) :- monomial(M), polynomial(P), !.
 polynomial(M+P) :- monomial(M), polynomial(P), !.
 polynomial(P-M) :- monomial(M), polynomial(P), !.
 
+%% poly2list(P, L)
+%
+% Transforms a list representing a polynomial and vice-versa.
+%
+poly2list(0, []).
+poly2list(M, [M]) :- monomial(M), !.
+
+poly2list(P+M, L2) :-
+    monomial(M),
+    poly2list(P, L),
+    append(L, [M], L2), !.
+
+%% TODO: fix list to poly
+%poly2list(M+P, [M|L]) :- 
+%    monomial(M), 
+%    poly2list(P, L), !.
+poly2list(P, [M1|[M2|L]]) :-
+    addmono(M1,M2,P1),
+    poly2list(P2, L),
+    addpoly(P1, P2,P), !.
+
 %% scalepoly(P1, K, P2)
 %
 % Is true if P2 is the polymonial P2 scaled by K
@@ -170,23 +191,7 @@ addpoly(M1, M2, M3) :-
 addpoly(P1+M1, M2, P1+M3) :-
     addmono(M1, M2, M3), !.
 
-% True if M is the single element of a list [M].
-poly2list(0, []).
-poly2list(M, [M]) :- monomial(M), !.
-% Fill a list with the monomials of a polynomial. Right to left.
-poly2list(P+M, L2) :-
-    monomial(M),
-    poly2list(P, L),
-    append(L, [M], L2), !.
-% Construct a polynomial form a list. Left to right.
-% Need to fix style: a + (b + (c + d + (...) ) )
-%poly2list(M+P, [M|L]) :- 
-%    monomial(M), 
-%    poly2list(P, L), !.
-poly2list(P, [M1|[M2|L]]) :-
-    addmono(M1,M2,P1),
-    poly2list(P2, L),
-    addpoly(P1, P2,P), !.
+
 /*
 %% Sort a polynomial by degree and alphabetical order
 simpoly_list(L, L3) :-
