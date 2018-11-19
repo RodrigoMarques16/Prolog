@@ -1,6 +1,6 @@
 # TODO List #
 
-Status of predicate implementation. Serves as documentation.
+Status of predicate implementation. Also serves as documentation.
 
 ## Base syntax ##
 
@@ -32,7 +32,18 @@ Status of predicate implementation. Serves as documentation.
 
  - **polynomial(P)**: True if P is a sum of monomials.
 
-## Incomplete ##
-
  - **poly2list(P, L)**: Transforms polymonials into lists and vice-versa. 
-    - need to fix list to polymonial transformation
+
+## Incomplete ##
+ 
+ 
+ 
+ - **sort_poly(P1, P2)**: Sort a polymonial's monomials.
+    - Need to reduce repeated monomials.
+
+ - **addpolly(P1, P2, P3)**: Sum two monomials.
+    - Missing sorting before addition.
+    - Missing var power checks.
+
+ - **Negative coefficients** in monomials. Transform subtractions.
+  
