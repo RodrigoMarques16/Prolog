@@ -88,17 +88,6 @@ normalize_mono(M, M2) :-
     monparts(M,K,VP), 
     M2 = K*VP, !.
 
-% polynomial(P)
-%
-% Is true if P is a Monomial or if P is a sum of 
-% monomials
-%
-polynomial(M)   :- monomial(M).
-polynomial(P+M) :- monomial(M), polynomial(P), !.
-polynomial(M+P) :- monomial(M), polynomial(P), !.
-polynomial(P-M) :- monomial(M), polynomial(P), !.
-
- 
 %% addmono(M1, M2, M3)
 % 
 % True if M3 is the sum of M1 with M3.
@@ -126,6 +115,18 @@ scale_mono(M1, K, M2) :-
     monparts(M1, K1, VP),
     K2 is K * K1,
     M2 = K2 * VP, !.
+
+% polynomial(P)
+%
+% Is true if P is a Monomial or if P is a sum of 
+% monomials
+%
+polynomial(M)   :- monomial(M).
+polynomial(P+M) :- monomial(M), polynomial(P), !.
+polynomial(M+P) :- monomial(M), polynomial(P), !.
+polynomial(P-M) :- monomial(M), polynomial(P), !.
+
+ 
 
 % Mutiply a polynomial by a constant.
 scalepoly(M1, K, M3) :-
