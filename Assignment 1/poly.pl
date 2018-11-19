@@ -98,25 +98,46 @@ addmono(M1, M2, M3) :-
     monparts(M1, K1, VP1),
     monparts(M2, K2, VP1),
     K3 is K1+K2,
-    M3 = K3*VP1, !.
+    M3 = K3*VP1, 
+    !.
 
 addmono(M1, M2, M3) :-
     monparts(M1, _, VP1),
     monparts(M2, _, VP2),
     VP1 \== VP2,
-    M3 = M1+M2, !.
+    M3 = M1+M2, 
+    !.
 
-% scalemono(M1, K, M2)
+%% scalemono(M1, K, M2)
 %
 % True if M2 is M1 multiplied by the scalar K.
 %
-scale_mono(M1, K, M2) :-
+scale_mono(M1, K, M3) :-
     monomial(M1),
     monparts(M1, K1, VP),
     K2 is K * K1,
-    M2 = K2 * VP, !.
+    M2 = K2 * VP, 
+    simmono(M2, M3), 
+    !.
 
-% polynomial(P)
+%% simmono(M1, M2)
+%
+% Transforms M1 into a simplified form.
+% Normalizes the monomial before simplifying.
+%
+simmono(M1, M2) :- 
+    normalize_mono(M1, M),
+    simmono_aux(M, M2).
+
+simmono_aux(1*VP, M2)   :- simmono(VP, M2), !.
+simmono_aux(0*_, 0)     :- !.
+simmono_aux(K*V^1, K*V) :- coefficient(K),  !.
+simmono_aux(V^1, V)     :- pvar(V),         !. 
+simmono_aux(_^0, 1)     :- !.
+simmono_aux(K*_^0, K)   :- number(K),       !.
+simmono_aux(M, M).
+
+%% polynomial(P)
 %
 % Is true if P is a Monomial or if P is a sum of 
 % monomials
@@ -126,17 +147,21 @@ polynomial(P+M) :- monomial(M), polynomial(P), !.
 polynomial(M+P) :- monomial(M), polynomial(P), !.
 polynomial(P-M) :- monomial(M), polynomial(P), !.
 
- 
-
-% Mutiply a polynomial by a constant.
+%% scalepoly(P1, K, P2)
+%
+% Is true if P2 is the polymonial P2 scaled by K
+%
 scalepoly(M1, K, M3) :-
     monomial(M1),
     scale_mono(M1, K, M2),
-    simpoly(M2, M3), !.
+    simmono(M2, M3), 
+    !.
+
 scalepoly(P1+M1, K, P3) :-
     scalepoly(P1, K, P2),
     scale_mono(M1, K, M2), 
-    simpoly(P2+M2, P3), !.
+    simpoly(P2+M2, P3), 
+    !.
 
 % Sum two polynomials
 addpoly(M1, M2, M3) :-
@@ -144,15 +169,6 @@ addpoly(M1, M2, M3) :-
     addmono(M1, M2, M3), !.
 addpoly(P1+M1, M2, P1+M3) :-
     addmono(M1, M2, M3), !.
-
-% Simplify a monomial.
-simmono(1*M, M2)    :- simmono(M, M2), !.
-simmono(0*_, 0)     :- !. 
-simmono(K*M^1, K*M) :- number(K), !.
-simmono(M^1, M)     :- pvar(M),   !. 
-simmono(_^0, 1)     :- !.
-simmono(K*_^0, K)   :- number(K), !.
-simmono(M, M).
 
 % True if M is the single element of a list [M].
 poly2list(0, []).
