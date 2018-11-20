@@ -80,13 +80,15 @@ simmono(M1, M2) :-
     normalize_mono(M1, M) ,!,
     simmono_aux(M, M2).
 
-simmono_aux(1*VP, M2)   :- simmono_aux(VP, M2), !.
-simmono_aux(0*_, 0)     :- !.
-simmono_aux(K*V^1, K*V) :- coefficient(K),  !.
-simmono_aux(V^1, V)     :- pvar(V),         !. 
-simmono_aux(_^0, 1)     :- !.
-simmono_aux(K*_^0, K)   :- number(K),       !.
-simmono_aux(M, M).
+simmono_aux(1*VP, M2)     :- simmono_aux(VP, M2), !.
+simmono_aux(0*_, 0)       :- !.
+simmono_aux(K*indep, K)   :- number(K),           !.
+simmono_aux(K*indep^1, K) :- number(K),           !.
+simmono_aux(K*V^1, K*V)   :- coefficient(K),      !.
+simmono_aux(V^1, V)       :- pvar(V),             !. 
+simmono_aux(_^0, 1)       :- !.
+simmono_aux(K*_^0, K)     :- number(K),           !.
+simmono_aux(M, M).  
 
 %% mono_compare(Op, M1, M2)
 %
@@ -114,7 +116,11 @@ mono_compare_aux(Op, M1, M2) :-
     monparts(M2, _, Var2^_),
     var_compare(Op, Var1, Var2).
 
+%% same_power(M1, M2)
+%
+% True if M1 and M2 are monomials with the same var power.
+%
 same_power(M1, M2) :-
-    monparts(M1, K, VP1),
-    monparts(M2, K, VP2),
+    monparts(M1, _, VP1),
+    monparts(M2, _, VP2),
     VP1 = VP2.
