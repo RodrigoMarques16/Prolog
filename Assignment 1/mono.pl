@@ -79,11 +79,14 @@ scale_mono(M1, K, M3) :-
 % Transforms M1 into a simplified form.
 % Normalizes the monomial before simplifying.
 %
-simmono(M1, M2) :- 
-    normalize_mono(M1, M) ,!,
-    simmono_aux(M, M2).
+simmono(M1, M) :- 
+    normalize_mono(M1, M2),
+    !,
+    simmono_aux(M2, M).
 
+simmono_aux(-1*_^0, -1)   :- !.
 simmono_aux(1*VP, M2)     :- simmono_aux(VP, M2), !.
+simmono_aux(-1*VP, -M2)   :- simmono_aux(VP, M2), !.
 simmono_aux(0*_, 0)       :- !.
 simmono_aux(K*indep, K)   :- number(K),           !.
 simmono_aux(K*indep^1, K) :- number(K),           !.
@@ -91,9 +94,10 @@ simmono_aux(indep, 1)     :- !.
 simmono_aux(indep^1, 1)   :- !.
 simmono_aux(K*V^1, K*V)   :- coefficient(K),      !.
 simmono_aux(V^1, V)       :- pvar(V),             !. 
+simmono_aux(-V^1, -V)     :- pvar(V),             !. 
 simmono_aux(_^0, 1)       :- !.
 simmono_aux(K*_^0, K)     :- number(K),           !.
-simmono_aux(M, M).  
+simmono_aux(M, M).
 
 %% mono_compare(Op, M1, M2)
 %
