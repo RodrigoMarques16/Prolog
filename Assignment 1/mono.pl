@@ -43,18 +43,20 @@ normalize_mono(M, M2) :-
 % If both monomials have the same var power the sum
 % results in a polynomial.
 %
-addmono(M1, M2, M3) :-
+addmono(M1, M2, M4) :-
     monparts(M1, K1, VP1),
     monparts(M2, K2, VP1),
     K3 is K1+K2,
-    M3 = K3*VP1, 
+    M3 = K3 * VP1, 
+    simmono(M3, M4),
     !.
 
-addmono(M1, M2, M3) :-
+addmono(M1, M2, M4) :-
     monparts(M1, _, VP1),
     monparts(M2, _, VP2),
     VP1 \== VP2,
-    M3 = M1+M2, 
+    M3 = M1 + M2, 
+    simmono(M3, M4),
     !.
 
 %% scalemono(M1, K, M2)
@@ -111,3 +113,8 @@ mono_compare_aux(Op, M1, M2) :-
     monparts(M1, _, Var1^_),
     monparts(M2, _, Var2^_),
     var_compare(Op, Var1, Var2).
+
+same_power(M1, M2) :-
+    monparts(M1, K, VP1),
+    monparts(M2, K, VP2),
+    VP1 = VP2.
