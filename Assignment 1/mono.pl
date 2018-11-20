@@ -9,12 +9,13 @@
 %   - Coefficient * Var power: K * x^Exp
 %   - Var Power * Coefficient: x^Exp * K
 %
-monomial(X*K) :- number(K),   power(X), !.
-monomial(K*X) :- number(K),   power(X), !.
-monomial(V)   :- pvar(V),     !.
-monomial(VP)  :- power(VP),   !.
-monomial(N)   :- number(N),   !.
-monomial(-M)  :- monomial(M), !.
+monomial(X*K) :- number(K), power(X), !.
+monomial(K*X) :- number(K), power(X), !.
+monomial(V)   :- pvar(V),   !.
+monomial(-V)  :- pvar(V),   !.
+monomial(VP)  :- power(VP), !.
+monomial(-VP) :- power(VP), !.
+monomial(N)   :- number(N), !.
 
 % monparts(M, K, V^E)
 %
