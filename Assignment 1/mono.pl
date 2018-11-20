@@ -22,8 +22,10 @@ monomial(N)   :- number(N), !.
 % Extract parts from monomial
 %
 monparts(V, 1, V^1)     :- pvar(V),    !.
+monparts(-V, -1, V^1)   :- pvar(V),    !.
 monparts(K, K, indep^1) :- number(K),  !.
 monparts(V^E, 1, V^E)   :- power(V^E), !.
+monparts(-V^E, -1, V^E) :- power(V^E), !.
 monparts(K*VP, K, V^E)  :- number(K),  varpower(VP, V, E), !.
 monparts(VP*K, K, V^E)  :- number(K),  varpower(VP, V, E), !.
 
