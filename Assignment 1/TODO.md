@@ -54,6 +54,6 @@ Status of predicate implementation. Also serves as documentation.
 
 ## Incomplete ##
 
- - **Poly2list:** Negative coefficients in monomials. Transform subtractions.
+ - **Poly2list:** Convert negative monomials to subtractions.
 
   
