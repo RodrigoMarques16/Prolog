@@ -51,12 +51,11 @@ addmono(M1, M2, M4) :-
     simmono(M3, M4),
     !.
 
-addmono(M1, M2, M4) :-
+addmono(M1, M2, M3) :-
     monparts(M1, _, VP1),
     monparts(M2, _, VP2),
     VP1 \== VP2,
     M3 = M1 + M2, 
-    simmono(M3, M4),
     !.
 
 %% scalemono(M1, K, M2)
@@ -107,8 +106,7 @@ mono_compare(>, M1, M2) :- mono_compare_aux(>, M1, M2), !.
 %
 mono_compare_aux(Op, M1, M2) :-
     monparts(M1, _, Var1^Exp1),
-    monparts(M2, _, Var2^Exp2),
-    Var1=Var2,
+    monparts(M2, _, Var1^Exp2),
     compare(Op, Exp1, Exp2).
 
 mono_compare_aux(Op, M1, M2) :-
@@ -121,6 +119,13 @@ mono_compare_aux(Op, M1, M2) :-
 % True if M1 and M2 are monomials with the same var power.
 %
 same_power(M1, M2) :-
-    monparts(M1, _, VP1),
-    monparts(M2, _, VP2),
-    VP1 = VP2.
+    monparts(M1, _, VP),
+    monparts(M2, _, VP).
+
+%% same_power(M1, M2)
+%
+% True if M1 and M2 are monomials with the same variable.
+%
+same_var(M1, M2) :-
+    monparts(M1, _, Var^_),
+    monparts(M2, _, Var^_).
