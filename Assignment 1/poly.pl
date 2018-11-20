@@ -21,14 +21,22 @@ polynomial(P-M) :- monomial(M), polynomial(P), !.
 %
 % Transforms a list representing a polynomial and vice-versa.
 %
-poly2list(0, [])  :- !.
-poly2list(M, [M]) :- monomial(M), !.
 
 poly2list(P+M, L2) :-
     monomial(M),
     poly2list(P, L),
     append(L, [M], L2), 
     !.
+
+poly2list(P-M, L2) :-
+    monomial(M),
+    poly2list(P, L),
+    scale_mono(M, -1, M2),
+    append(L, [M2], L2), 
+    !.
+
+poly2list(0, [])  :- !.
+poly2list(M, [M]) :- monomial(M), !.
 
 poly2list(M+P, [M|L]) :- 
     monomial(M), 
