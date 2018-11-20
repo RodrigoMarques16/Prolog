@@ -48,11 +48,12 @@ Status of predicate implementation. Also serves as documentation.
 
  - **simpoly_list(P, P2)** and **simpoly(P, P2)**: Simplify a polymonial.
   
+ - **scale_poly_list(P1, K, P)** and **scalepoly(P1, K, P)**: Is true if P is P1 multiplied by the scalar K.
+  
  - **add_poly_list(P1,P2,P)** and **add_poly(P1,P2,P)**: Add two polynomials together
 
 ## Incomplete ##
 
  - **Poly2list:** Negative coefficients in monomials. Transform subtractions.
 
- - **scalepoly**: change predicate to use lists
   
