@@ -39,3 +39,15 @@ varpower(V^E, V, E) :- pvar(V), exponent(E).
 % True if K is a number.
 %
 coefficient(K) :- number(K).
+
+%% var_compare(Op, V1, V2)
+%
+% True if OP is < and V1 is 'indep' or comes before V2 in 
+% lexicographic order.
+% True if OP is > and V2 is 'indep' or V1 comes after V2 in 
+% lexicographic order.
+%
+var_compare(<, indep, _).
+var_compare(>, _, indep).
+var_compare(<, X, Y) :- X @< Y.
+var_compare(>, X, Y) :- X @> Y.

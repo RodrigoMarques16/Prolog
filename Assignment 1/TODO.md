@@ -14,6 +14,8 @@ Status of predicate implementation. Also serves as documentation.
 
  - **coefficient(K)**: True if K Is a number.
 
+ - **var_compare(Op, V1, V2)**: Compare variables in lexicographic oredr. Gives 'indep' maximum priority.
+
 ## Monomials ##
 
  - **monomial(M)**: True if M is a monomial.
@@ -28,6 +30,8 @@ Status of predicate implementation. Also serves as documentation.
 
  - **scale_mono(M1, K, M2)**: True if M2 is M1 multiplied by K.
 
+ - **mono_compare(Op, M1, M2)**: Monomial comparator for predsort.
+  
 ## Polynomials ##
 
  - **polynomial(P)**: True if P is a sum of monomials.
@@ -41,7 +45,7 @@ Status of predicate implementation. Also serves as documentation.
  - **sort_poly(P1, P2)**: Sort a polymonial's monomials.
     - Need to reduce repeated monomials.
 
- - **addpolly(P1, P2, P3)**: Sum two monomials.
+ - **addpoly(P1, P2, P3)**: Sum two monomials.
     - Missing sorting before addition.
     - Missing var power checks.
 

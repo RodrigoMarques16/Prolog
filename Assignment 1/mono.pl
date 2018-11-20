@@ -85,3 +85,29 @@ simmono_aux(V^1, V)     :- pvar(V),         !.
 simmono_aux(_^0, 1)     :- !.
 simmono_aux(K*_^0, K)   :- number(K),       !.
 simmono_aux(M, M).
+
+%% mono_compare(Op, M1, M2)
+%
+% Predicate to use with predsort to sort polymonials and avoid
+% losing similar monomials.
+%
+% True if Op is < and M1 <= M2 or Op is > and M1 > M2
+%
+mono_compare(<, M1, M2) :- mono_compare_aux(<, M1, M2), !.
+mono_compare(<, M1, M2) :- mono_compare_aux(=, M1, M2), !.
+mono_compare(>, M1, M2) :- mono_compare_aux(>, M1, M2), !.
+
+%% mono_compare(++Op, M1, M2)
+%
+% True if M1 compares to M2 using given operator
+%
+mono_compare_aux(Op, M1, M2) :-
+    monparts(M1, _, Var1^Exp1),
+    monparts(M2, _, Var2^Exp2),
+    Var1=Var2,
+    compare(Op, Exp1, Exp2).
+
+mono_compare_aux(Op, M1, M2) :-
+    monparts(M1, _, Var1^_),
+    monparts(M2, _, Var2^_),
+    var_compare(Op, Var1, Var2).
