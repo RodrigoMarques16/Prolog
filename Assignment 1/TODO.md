@@ -48,11 +48,6 @@ Status of predicate implementation. Also serves as documentation.
 
 ## Incomplete ##
  
- 
- 
- - **sort_poly(P1, P2)**: Sort a polymonial's monomials.
-    - Need to reduce repeated monomials.
-
  - **addpoly(P1, P2, P3)**: Sum two monomials.
     - Missing sorting before addition.
     - Missing var power checks.
