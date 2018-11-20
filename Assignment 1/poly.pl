@@ -173,7 +173,8 @@ add_poly_list_aux([M1|P1], [M2|P2], [M2|P]) :-
 addpoly(P1, P2, P) :-
     poly2list(P1, L1),
     poly2list(P2, L2),
-    add_poly_list(L1, L2, L),
+    add_poly_list(L1, L2, L), 
+    !,
     poly2list(P, L).
 
 
