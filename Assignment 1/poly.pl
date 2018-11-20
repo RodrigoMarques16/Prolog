@@ -54,7 +54,6 @@ sort_poly(P, P2) :-
     sort_poly_list(L, L2),
     poly2list(P2, L2), !.
 
-
 %% compress_poly_list(P, P2)
 % 
 % Sum together all monomials with the same var power in a
@@ -84,9 +83,10 @@ compress_poly(P, P2) :-
     compress_poly_list(L, L2),
     poly2list(P2, L2).   
 
-
-%% Simplify a polynomial represented as a list of monomials
-% TODO: sort, handle repeats
+%% simpoly_list(P, P2)
+% 
+% Simplify a polynomial represented as a list of monomials
+%
 simpoly_list([], []).
 
 simpoly_list([M], [M2]) :- 
@@ -101,7 +101,10 @@ simpoly_list([M|P], L) :-
         L = P2
     ;   L = [M2|P2]), !.
     
+%% simpoly(P, P2)
+%
 % Simplify a polynomial.
+%
 simpoly(P+0, P2) :- simpoly(P, P2), !.
 simpoly(0+P, P2) :- monomial(P),    simmono(P, P2), !.
 simpoly(P, P2) :-
@@ -125,7 +128,10 @@ scalepoly(P1+M1, K, P3) :-
     simpoly(P2+M2, P3), 
     !.
 
-% Sum two polynomials
+% addpoly(P1, P2, P)
+%
+% Add two polynomials together
+%
 addpoly(M1, M2, M3) :-
     monomial(M1),
     addmono(M1, M2, M3), !.
