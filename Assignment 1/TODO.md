@@ -47,10 +47,6 @@ Status of predicate implementation. Also serves as documentation.
  - **compress_poly(P, P2)**: See above.
 
 ## Incomplete ##
- 
- - **addpoly(P1, P2, P3)**: Sum two monomials.
-    - Missing sorting before addition.
-    - Missing var power checks.
 
- - **Negative coefficients** in monomials. Transform subtractions.
+ - **Poly2list:** Negative coefficients in monomials. Transform subtractions.
   

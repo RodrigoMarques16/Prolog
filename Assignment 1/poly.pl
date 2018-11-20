@@ -134,15 +134,47 @@ scalepoly(P1+M1, K, P3) :-
     simpoly(P2+M2, P3), 
     !.
 
+% add_poly_list(P1, P2, P)
+%
+% Add two polynomials together
+%
+add_poly_list(P1, P2, P) :-
+    sort_poly_list(P1, SP1),
+    sort_poly_list(P2, SP2),
+    add_poly_list_aux(SP1, SP2, P3), 
+    !,
+    simpoly_list(P3, P).
+
+add_poly_list_aux(P, [], P).
+add_poly_list_aux([], P, P).
+
+add_poly_list_aux([M1], [M2], P) :-
+    addmono(M1, M2, M),
+    poly2list(M, P).
+
+add_poly_list_aux([M1|P1], [M2|P2], P) :-
+    same_power(M1, M2),
+    addmono(M1, M2, M3),
+    poly2list(M3, M),
+    add_poly_list_aux([M|P1], P2, P).
+
+add_poly_list_aux([M1|P1], [M2|P2], [M1|P]) :-
+    mono_compare(<, M1, M2),
+    add_poly_list_aux(P1, [M2|P2], P).
+
+add_poly_list_aux([M1|P1], [M2|P2], [M2|P]) :-
+    mono_compare(>, M1, M2),
+    add_poly_list_aux([M1|P1], P2, P).
+
 % addpoly(P1, P2, P)
 %
 % Add two polynomials together
 %
-addpoly(M1, M2, M3) :-
-    monomial(M1),
-    addmono(M1, M2, M3), !.
-addpoly(P1+M1, M2, P1+M3) :-
-    addmono(M1, M2, M3), !.
+addpoly(P1, P2, P) :-
+    poly2list(P1, L1),
+    poly2list(P2, L2),
+    add_poly_list(L1, L2, L),
+    poly2list(P, L).
 
 
 
