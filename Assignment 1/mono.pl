@@ -75,10 +75,10 @@ scale_mono(M1, K, M3) :-
 % Normalizes the monomial before simplifying.
 %
 simmono(M1, M2) :- 
-    normalize_mono(M1, M),
+    normalize_mono(M1, M) ,!,
     simmono_aux(M, M2).
 
-simmono_aux(1*VP, M2)   :- simmono(VP, M2), !.
+simmono_aux(1*VP, M2)   :- simmono_aux(VP, M2), !.
 simmono_aux(0*_, 0)     :- !.
 simmono_aux(K*V^1, K*V) :- coefficient(K),  !.
 simmono_aux(V^1, V)     :- pvar(V),         !. 
