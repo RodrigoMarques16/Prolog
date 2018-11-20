@@ -47,7 +47,7 @@ coefficient(K) :- number(K).
 % True if OP is > and V2 is 'indep' or V1 comes after V2 in 
 % lexicographic order.
 %
-var_compare(<, indep, _).
-var_compare(>, _, indep).
-var_compare(<, X, Y) :- X @< Y.
-var_compare(>, X, Y) :- X @> Y.
+var_compare(<, indep, _) :- !.
+var_compare(>, _, indep) :- !.
+var_compare(<, X, Y)     :- X @< Y.
+var_compare(>, X, Y)     :- X @> Y.
