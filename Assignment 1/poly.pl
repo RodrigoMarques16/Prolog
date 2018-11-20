@@ -85,21 +85,27 @@ compress_poly(P, P2) :-
 
 %% simpoly_list(P, P2)
 % 
-% Simplify a polynomial represented as a list of monomials
+% Simplify a polynomial represented as a list of monomials.
 %
-simpoly_list([], []).
+simpoly_list(P1, P) :-
+    simpoly_list_aux(P1, P2),
+    compress_poly_list(P2, P).
 
-simpoly_list([M], [M2]) :- 
+simpoly_list_aux([], []).
+
+simpoly_list_aux([M], [M2]) :- 
     normalize_mono(M, N), 
-    simmono(N, M2), !.
+    simmono(N, M2), 
+    !.
 
-simpoly_list([M|P], L) :-
+simpoly_list_aux([M|P], L) :-
     normalize_mono(M, N),
     simmono(N, M2),
-    simpoly_list(P, P2),
+    simpoly_list_aux(P, P2),
     (   M2 == 0 -> 
-        L = P2
-    ;   L = [M2|P2]), !.
+        L = P2  
+    ;   L = [M2|P2]),
+    !.
     
 %% simpoly(P, P2)
 %
