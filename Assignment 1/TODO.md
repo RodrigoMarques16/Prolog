@@ -38,6 +38,10 @@ Status of predicate implementation. Also serves as documentation.
 
  - **poly2list(P, L)**: Transforms polymonials into lists and vice-versa. 
 
+ - **sort_poly_list(P, P2)**: Sort a polynomial given as a list.
+
+ - **sort_poly(P, P2)**: Sort a polynomial.
+
 ## Incomplete ##
  
  

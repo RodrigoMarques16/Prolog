@@ -37,39 +37,20 @@ poly2list(M+P, [M|L]) :-
 
 %% sort_poly_list(P, P2)
 %
-% Sorts the polynomial  represented as a list. 
+% Sorts the polynomial represented as a list. 
 %
 sort_poly_list(P, P2) :- 
     predsort(mono_compare, P, P2), !.
 
-% Sort a polymonial
+%% sort_poly(P, P2)
+%
+% Sorts the given polynomial in P by converting it to a list
+% and calling predicate sort_poly_list/2.
+%
 sort_poly(P, P2) :-
     poly2list(P, L),
-    simpoly_list(L, L2),
-    sort_poly_list(L2, L3),
-    poly2list(P2, L3), !.
-
-%% scalepoly(P1, K, P2)
-%
-% Is true if P2 is the polymonial P2 scaled by K
-%
-scalepoly(M1, K, M2) :-
-    monomial(M1),
-    scale_mono(M1, K, M2),
-    !.
-
-scalepoly(P1+M1, K, P3) :-
-    scalepoly(P1, K, P2),
-    scale_mono(M1, K, M2), 
-    simpoly(P2+M2, P3), 
-    !.
-
-% Sum two polynomials
-addpoly(M1, M2, M3) :-
-    monomial(M1),
-    addmono(M1, M2, M3), !.
-addpoly(P1+M1, M2, P1+M3) :-
-    addmono(M1, M2, M3), !.
+    sort_poly_list(L, L2),
+    poly2list(P2, L2), !.
 
 %% Simplify a polynomial represented as a list of monomials
 % TODO: sort, handle repeats
@@ -95,5 +76,29 @@ simpoly(P, P2) :-
     sort_poly_list(L, L2),
     simpoly_list(L2, S),
     poly2list(P2, S), !.
+
+%% scalepoly(P1, K, P2)
+%
+% Is true if P2 is the polymonial P2 scaled by K
+%
+scalepoly(M1, K, M2) :-
+    monomial(M1),
+    scale_mono(M1, K, M2),
+    !.
+
+scalepoly(P1+M1, K, P3) :-
+    scalepoly(P1, K, P2),
+    scale_mono(M1, K, M2), 
+    simpoly(P2+M2, P3), 
+    !.
+
+% Sum two polynomials
+addpoly(M1, M2, M3) :-
+    monomial(M1),
+    addmono(M1, M2, M3), !.
+addpoly(P1+M1, M2, P1+M3) :-
+    addmono(M1, M2, M3), !.
+
+
 
 
