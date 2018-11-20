@@ -40,7 +40,11 @@ Status of predicate implementation. Also serves as documentation.
 
  - **sort_poly_list(P, P2)**: Sort a polynomial given as a list.
 
- - **sort_poly(P, P2)**: Sort a polynomial.
+ - **sort_poly(P, P2)**: See above.
+
+ - **compress_poly_list(P, P2)**: Sum together all monomials with the same var power in a polymonial.
+
+ - **compress_poly(P, P2)**: See above.
 
 ## Incomplete ##
  

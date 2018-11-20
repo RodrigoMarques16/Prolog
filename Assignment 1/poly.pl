@@ -38,7 +38,9 @@ poly2list(M+P, [M|L]) :-
 %% sort_poly_list(P, P2)
 %
 % Sorts the polynomial represented as a list. 
+% Merges monomials with the same power.
 %
+
 sort_poly_list(P, P2) :- 
     predsort(mono_compare, P, P2), !.
 
@@ -51,6 +53,37 @@ sort_poly(P, P2) :-
     poly2list(P, L),
     sort_poly_list(L, L2),
     poly2list(P2, L2), !.
+
+
+%% compress_poly_list(P, P2)
+% 
+% Sum together all monomials with the same var power in a
+% polynomial.
+%
+compress_poly_list(P, P3) :-
+    sort_poly_list(P, P2),
+    compress_poly_list_aux(P2, P3), !.
+
+compress_poly_list_aux([], []).
+compress_poly_list_aux([M], [M]). 
+compress_poly_list_aux([M1,M2|P], P2) :-
+    same_power(M1, M2),
+    addmono(M1, M2, M),
+    compress_poly_list([M|P], P2).
+
+compress_poly_list_aux([M|P], [M|P2]) :-
+    compress_poly_list(P, P2). 
+
+%% compress_poly(P, P2)
+%
+% Sum together all monomials with the same var power in a
+% polynomial.
+%
+compress_poly(P, P2) :-
+    poly2list(P, L),
+    compress_poly_list(L, L2),
+    poly2list(P2, L2).   
+
 
 %% Simplify a polynomial represented as a list of monomials
 % TODO: sort, handle repeats
