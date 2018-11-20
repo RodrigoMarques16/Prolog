@@ -31,22 +31,28 @@ Status of predicate implementation. Also serves as documentation.
  - **scale_mono(M1, K, M2)**: True if M2 is M1 multiplied by K.
 
  - **mono_compare(Op, M1, M2)**: Monomial comparator for predsort.
+
+ - **same_power(M1, M2)**: True if M1 and M2 have the same var power.
+
+ - **same_var(M1, M2)**: True if M1 and M2 have the same var.
   
 ## Polynomials ##
 
  - **polynomial(P)**: True if P is a sum of monomials.
 
- - **poly2list(P, L)**: Transforms polymonials into lists and vice-versa. 
+ - **poly2list(P, L)**: Transforms polynomials into lists and vice-versa. 
 
- - **sort_poly_list(P, P2)**: Sort a polynomial given as a list.
+ - **sort_poly_list(P, P2)** and **sort_poly(P, P2)**: Sort a polynomial given as a list.
 
- - **sort_poly(P, P2)**: See above.
+ - **compress_poly_list(P, P2)** and **compress_poly(P, P2)**: Sum together all monomials with the same var power in a polynomial.
 
- - **compress_poly_list(P, P2)**: Sum together all monomials with the same var power in a polymonial.
-
- - **compress_poly(P, P2)**: See above.
+ - **simpoly_list(P, P2)** and **simpoly(P, P2)**: Simplify a polymonial.
+  
+ - **add_poly_list(P1,P2,P)** and **add_poly(P1,P2,P)**: Add two polynomials together
 
 ## Incomplete ##
 
  - **Poly2list:** Negative coefficients in monomials. Transform subtractions.
+
+ - **scalepoly**: change predicate to use lists
   

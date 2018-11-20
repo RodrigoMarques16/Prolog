@@ -119,20 +119,30 @@ simpoly(P, P2) :-
     simpoly_list(L2, S),
     poly2list(P2, S), !.
 
+%% scalepoly_list(P1, K, P2)
+%
+% Is true if P2 is the polymonial P2 scaled by K
+%
+scale_poly_list(P1, K, P) :-
+    scale_poly_list_aux(P1, K, P2),
+    simpoly_list(P2, P).
+
+scale_poly_list_aux([M1], K, [M2]) :-
+    scale_mono(M1, K, M2), 
+    !.
+
+scale_poly_list_aux([M1|P1], K, [M2|P2]) :-
+    scale_poly_list_aux(P1, K, P2), 
+    scale_mono(M1, K, M2),
+    !.
+
 %% scalepoly(P1, K, P2)
 %
 % Is true if P2 is the polymonial P2 scaled by K
 %
-scalepoly(M1, K, M2) :-
-    monomial(M1),
-    scale_mono(M1, K, M2),
-    !.
-
-scalepoly(P1+M1, K, P3) :-
-    scalepoly(P1, K, P2),
-    scale_mono(M1, K, M2), 
-    simpoly(P2+M2, P3), 
-    !.
+scalepoly(P1, K, P) :-
+    poly2list(P1, L),
+    scale_poly_list(L, K, P).
 
 % add_poly_list(P1, P2, P)
 %
