@@ -3,6 +3,8 @@
 %
 % Symbollic Manipulation
 %
+% Rodrigo Marques - 201605427
+%
 
 %:-include("syntax.pl") - included in mono.pl
 :-include("mono.pl").
@@ -12,22 +14,19 @@
 % Is true if P is a Monomial or if P is a sum of 
 % monomials
 %
-polynomial(M)   :- monomial(M).
 polynomial(P+M) :- monomial(M), polynomial(P).
-%polynomial(M+P) :- monomial(M), polynomial(P).
+polynomial(M)   :- monomial(M).
+polynomial(M+P) :- monomial(M), polynomial(P).
 polynomial(P-M) :- monomial(M), polynomial(P).
 
 %% poly2list(P, L)
 %
 % Transforms a list representing a polynomial and vice-versa.
 %
-poly2list(0, [])  :- !.
-poly2list(M, [M]) :- monomial(M), !.
 
-poly2list(P-M, [M2|L]) :-
-    monomial(M),
-    scale_mono(M, -1, M2),
-    poly2list(P, L), 
+poly2list(0, [])  :- !.
+poly2list(M, [M]) :- 
+    monomial(M), 
     !.
 
 poly2list(P+M, [M|L]) :-
@@ -35,6 +34,11 @@ poly2list(P+M, [M|L]) :-
     poly2list(P, L), 
     !.
 
+
+poly2list(P-M, [M2|L]) :-
+    scale_mono(M, -1, M2),
+    poly2list(P, L), 
+    !.
 /*
 poly2list(P+M, L2) :-
     monomial(M),
@@ -120,8 +124,7 @@ simpoly_list_aux([M], [M2]) :-
     !.
 
 simpoly_list_aux([M|P], L) :-
-    normalize_mono(M, N),
-    simmono(N, M2),
+    simmono(M, M2),
     simpoly_list_aux(P, P2),
     (   M2 == 0 -> 
         L = P2  

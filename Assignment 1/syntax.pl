@@ -3,14 +3,14 @@
 % Used to get the list of variables accepted by the 
 % program.
 %
-pvars([x,y,z]).
+pvars([w,x,y,z]).
 
 %% pvar(X)
 %
 % True if X is a variable accepted by the program.
 %
-%pvar(X) :- pvars(V), member(X,V), !.
-pvar(X) :- atom(X).
+pvar(X) :- pvars(V), member(X,V).
+%pvar(X) :- atom(X).
 
 %% exponent(E)
 %
@@ -24,8 +24,8 @@ exponent(E) :- integer(E), E >= 0.
 % True if X is a variable and Y is either omitted 
 % or a non-negative integer
 %
-power(V)   :- pvar(V).
 power(V^E) :- pvar(V), exponent(E).
+power(V)   :- pvar(V).
 
 %% varpower(VP, V, E)
 %
