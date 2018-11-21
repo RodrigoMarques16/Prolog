@@ -30,15 +30,14 @@ exponent(E) :- integer(E), E >= 0.
 % True if X is a variable and Y is either omitted 
 % or a non-negative integer
 %
-power(indep).
 power(V^E) :- pvar(V), exponent(E).
 power(V)   :- pvar(V).
 %% varpower(VP, V, E)
 %
 % Extracts parts from a var power.
 %
-varpower(V, V, 1)   :- power(V).
 varpower(V^E, V, E) :- power(V^E).
+varpower(V, V, 1)   :- power(V).
 
 %% var_compare(Op, V1, V2)
 %
