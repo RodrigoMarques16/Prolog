@@ -2,7 +2,7 @@
 
 ## Symbollic Manipulation
 
-Simple program to parse and simplify polynomials.
+Simple program to manipulate polynomials and monomials. It can sum, scale and simplify.
 
 A polynomial is a sum of monomials.
 
@@ -13,7 +13,7 @@ Run program with `swipl poly.pl`
 
 ## References
 
-https://github.com/lucach/mvpoli_prolog/blob/master/mvpoli.pl - Comparing monomials
+https://github.com/lucach/mvpoli_prolog/ - Comparing monomials
 
 ## Base syntax ##
 
@@ -21,11 +21,12 @@ https://github.com/lucach/mvpoli_prolog/blob/master/mvpoli.pl - Comparing monomi
 
  - **pvar(X)**: True if X is a variable.
   
+ - **coefficient(K)**: True if K Is a number.
+  
  - **power(X^Y)**: True if x is a variable and Y is a non-negative integer.
  
  - **varpower(VP, V, E)**: Extract var and exponent from var power. 
 
- - **coefficient(K)**: True if K Is a number.
 
  - **var_compare(Op, V1, V2)**: Compare variables in lexicographic oredr. Gives 'indep' maximum priority.
 
