@@ -3,7 +3,7 @@
 % Used to get the list of variables accepted by the 
 % program.
 %
-pvars([w,x,y,z]).
+pvars([t,u,w,x,y,z]).
 
 %% pvar(X)
 %
@@ -11,6 +11,12 @@ pvars([w,x,y,z]).
 %
 pvar(X) :- pvars(V), member(X,V).
 %pvar(X) :- atom(X).
+
+%% coefficient(K)
+%
+% True if K is a number.
+%
+coefficient(K) :- number(K).
 
 %% exponent(E)
 %
@@ -24,21 +30,15 @@ exponent(E) :- integer(E), E >= 0.
 % True if X is a variable and Y is either omitted 
 % or a non-negative integer
 %
+power(indep).
 power(V^E) :- pvar(V), exponent(E).
 power(V)   :- pvar(V).
-
 %% varpower(VP, V, E)
 %
 % Extracts parts from a var power.
 %
-varpower(V, V, 1)   :- pvar(V).
-varpower(V^E, V, E) :- pvar(V), exponent(E).
-
-%% coefficient(K)
-%
-% True if K is a number.
-%
-coefficient(K) :- number(K).
+varpower(V, V, 1)   :- power(V).
+varpower(V^E, V, E) :- power(V^E).
 
 %% var_compare(Op, V1, V2)
 %
