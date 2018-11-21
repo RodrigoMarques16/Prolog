@@ -51,9 +51,3 @@ Status of predicate implementation. Also serves as documentation.
  - **scale_poly_list(P1, K, P)** and **scalepoly(P1, K, P)**: Is true if P is P1 multiplied by the scalar K.
   
  - **add_poly_list(P1,P2,P)** and **add_poly(P1,P2,P)**: Add two polynomials together
-
-## Incomplete ##
-
- - **Poly2list:** Convert negative monomials to subtractions.
-
-  

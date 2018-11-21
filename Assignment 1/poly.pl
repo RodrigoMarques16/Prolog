@@ -13,15 +13,29 @@
 % monomials
 %
 polynomial(M)   :- monomial(M).
-polynomial(P+M) :- monomial(M), polynomial(P), !.
-polynomial(M+P) :- monomial(M), polynomial(P), !.
-polynomial(P-M) :- monomial(M), polynomial(P), !.
+polynomial(P+M) :- monomial(M), polynomial(P).
+%polynomial(M+P) :- monomial(M), polynomial(P).
+polynomial(P-M) :- monomial(M), polynomial(P).
 
 %% poly2list(P, L)
 %
 % Transforms a list representing a polynomial and vice-versa.
 %
+poly2list(0, [])  :- !.
+poly2list(M, [M]) :- monomial(M), !.
 
+poly2list(P-M, [M2|L]) :-
+    monomial(M),
+    scale_mono(M, -1, M2),
+    poly2list(P, L), 
+    !.
+
+poly2list(P+M, [M|L]) :-
+    monomial(M),
+    poly2list(P, L), 
+    !.
+
+/*
 poly2list(P+M, L2) :-
     monomial(M),
     poly2list(P, L),
@@ -31,17 +45,14 @@ poly2list(P+M, L2) :-
 poly2list(P-M, L2) :-
     monomial(M),
     poly2list(P, L),
-    scale_mono(M, -1, M2),
-    append(L, [M2], L2), 
+    append(L, [-M], L2), 
     !.
-
-poly2list(0, [])  :- !.
-poly2list(M, [M]) :- monomial(M), !.
 
 poly2list(M+P, [M|L]) :- 
     monomial(M), 
     poly2list(P, L), 
     !.
+*/
 
 %% sort_poly_list(P, P2)
 %
@@ -60,7 +71,8 @@ sort_poly_list(P, P2) :-
 sort_poly(P, P2) :-
     poly2list(P, L),
     sort_poly_list(L, L2),
-    poly2list(P2, L2), !.
+    poly2list(P2, L2), 
+    !.
 
 %% compress_poly_list(P, P2)
 % 
@@ -69,7 +81,8 @@ sort_poly(P, P2) :-
 %
 compress_poly_list(P, P3) :-
     sort_poly_list(P, P2),
-    compress_poly_list_aux(P2, P3), !.
+    compress_poly_list_aux(P2, P3), 
+    !.
 
 compress_poly_list_aux([], []).
 compress_poly_list_aux([M], [M]). 
@@ -96,8 +109,8 @@ compress_poly(P, P2) :-
 % Simplify a polynomial represented as a list of monomials.
 %
 simpoly_list(P1, P) :-
-    simpoly_list_aux(P1, P2),
-    compress_poly_list(P2, P).
+    compress_poly_list(P1, P2),
+    simpoly_list_aux(P2, P).
 
 simpoly_list_aux([], []).
 
@@ -119,13 +132,11 @@ simpoly_list_aux([M|P], L) :-
 %
 % Simplify a polynomial.
 %
-simpoly(P+0, P2) :- simpoly(P, P2), !.
-simpoly(0+P, P2) :- monomial(P),    simmono(P, P2), !.
 simpoly(P, P2) :-
     poly2list(P, L),
     sort_poly_list(L, L2),
-    simpoly_list(L2, S),
-    poly2list(P2, S), !.
+    simpoly_list(L2, S), 
+    poly2list(P2, S).
 
 %% scalepoly_list(P1, K, P2)
 %
@@ -192,9 +203,4 @@ addpoly(P1, P2, P) :-
     poly2list(P1, L1),
     poly2list(P2, L2),
     add_poly_list(L1, L2, L), 
-    !,
     poly2list(P, L).
-
-
-
-
