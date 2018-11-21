@@ -14,9 +14,8 @@
 % Is true if P is a Monomial or if P is a sum of 
 % monomials
 %
-polynomial(P+M) :- monomial(M), polynomial(P).
 polynomial(M)   :- monomial(M).
-polynomial(M+P) :- monomial(M), polynomial(P).
+polynomial(P+M) :- monomial(M), polynomial(P).
 polynomial(P-M) :- monomial(M), polynomial(P).
 
 %% poly2list(P, L)
@@ -26,7 +25,7 @@ polynomial(P-M) :- monomial(M), polynomial(P).
 
 poly2list(0, [])  :- !.
 poly2list(M, [M]) :- 
-    monomial(M), 
+    monomial(M),
     !.
 
 poly2list(P+M, [M|L]) :-
@@ -34,36 +33,16 @@ poly2list(P+M, [M|L]) :-
     poly2list(P, L), 
     !.
 
-
 poly2list(P-M, [M2|L]) :-
     scale_mono(M, -1, M2),
     poly2list(P, L), 
     !.
-/*
-poly2list(P+M, L2) :-
-    monomial(M),
-    poly2list(P, L),
-    append(L, [M], L2), 
-    !.
-
-poly2list(P-M, L2) :-
-    monomial(M),
-    poly2list(P, L),
-    append(L, [-M], L2), 
-    !.
-
-poly2list(M+P, [M|L]) :- 
-    monomial(M), 
-    poly2list(P, L), 
-    !.
-*/
 
 %% sort_poly_list(P, P2)
 %
 % Sorts the polynomial represented as a list. 
 % Merges monomials with the same power.
 %
-
 sort_poly_list(P, P2) :- 
     predsort(mono_compare, P, P2), !.
 
@@ -164,7 +143,8 @@ scale_poly_list_aux([M1|P1], K, [M2|P2]) :-
 %
 scalepoly(P1, K, P) :-
     poly2list(P1, L),
-    scale_poly_list(L, K, P).
+    scale_poly_list(L, K, L2),
+    poly2list(P, L2).
 
 % add_poly_list(P1, P2, P)
 %
