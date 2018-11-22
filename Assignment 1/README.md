@@ -6,7 +6,7 @@ Simple program to manipulate polynomials and monomials. It can sum, scale and si
 
 A polynomial is a sum of monomials.
 
-A monomial is of the form `K*x^E`, where `K` is a floating point number and `E` is a positive integer.
+A monomial is of the form `K*X^E`, where `K` is a floating point number and `E` is a positive integer. And `X` belongs to a list of accepted variables: `[w,x,y,z]`; for simplicity in the code.
 
 ## Running
 Run program with `swipl poly.pl`
@@ -27,8 +27,9 @@ https://github.com/lucach/mvpoli_prolog/ - Comparing monomials
  
  - **varpower(VP, V, E)**: Extract var and exponent from var power. 
 
-
  - **var_compare(Op, V1, V2)**: Compare variables in lexicographic oredr. Gives 'indep' maximum priority.
+
+- **is_negative(K)**: True if K is negative.
 
 ## Monomials ##
 
@@ -49,7 +50,9 @@ https://github.com/lucach/mvpoli_prolog/ - Comparing monomials
  - **same_power(M1, M2)**: True if M1 and M2 have the same var power.
 
  - **same_var(M1, M2)**: True if M1 and M2 have the same var.
-  
+
+ - **nega_mono(M)**: True if M1 is a monomila with negative coefficient. 
+
 ## Polynomials ##
 
  - **polynomial(P)**: True if P is a sum of monomials.
