@@ -1,0 +1,4 @@
+scalepoly(x^2+10+5-y+3*z^3, 0 P).
+scalepoly(x^2+10+5-y+3*z^3, 1, P).
+scalepoly(x^2+10+5-y+3*z^3, -1, P).
+scalepoly(x^2+10+5-y+3*z^3, 2, P).

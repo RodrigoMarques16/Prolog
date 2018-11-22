@@ -26,9 +26,11 @@ monparts(V, 1, V^1)     :- pvar(V).
 monparts(-V, -1, V^1)   :- pvar(V).
 monparts(V^E, 1, V^E)   :- power(V^E).
 monparts(-V^E, -1, V^E) :- power(V^E).
-monparts(K, K, indep^1) :- number(K).
-monparts(K*VP, K, V^E)  :- number(K),  varpower(VP, V, E).
-monparts(VP*K, K, V^E)  :- number(K),  varpower(VP, V, E).
+monparts(K, K, indep^1) :- coefficient(K).
+monparts(K*VP, K, V^E)  :- coefficient(K),  varpower(VP, V, E).
+monparts(VP*K, K, V^E)  :- coefficient(K),  varpower(VP, V, E).
+monparts(K*indep, K, indep^1)   :- coefficient(K).
+monparts(K*indep^1, K, indep^1) :- coefficient(K).
 
 
 %% normalize_mono(M, M2)
@@ -90,13 +92,13 @@ simmono(M1, M) :-
     normalize_mono(M1, M2),
     simmono_aux(M2, M).
 
+simmono_aux(-1*_^0, -1)   :- !.
+simmono_aux(1*VP, M2)     :- simmono_aux(VP, M2), !.
+simmono_aux(-1*VP, -M2)   :- simmono_aux(VP, M2), !.
 simmono_aux(K*indep, K)   :- number(K),           !.
 simmono_aux(K*indep^1, K) :- number(K),           !.
 simmono_aux(indep, 1)     :- !.
 simmono_aux(indep^1, 1)   :- !.
-simmono_aux(-1*_^0, -1)   :- !.
-simmono_aux(1*VP, M2)     :- simmono_aux(VP, M2), !.
-simmono_aux(-1*VP, -M2)   :- simmono_aux(VP, M2), !.
 simmono_aux(0*_, 0)       :- !.
 simmono_aux(K*V^1, K*V)   :- coefficient(K),      !.
 simmono_aux(V^1, V)       :- pvar(V),             !. 
@@ -145,3 +147,11 @@ same_power(M1, M2) :-
 same_var(M1, M2) :-
     monparts(M1, _, Var^_),
     monparts(M2, _, Var^_).
+
+%% nega_mono(M)
+%
+% True if M's coefficient is negative.
+%
+nega_mono(M) :-
+    monparts(M, K, _),
+    is_negative(K).

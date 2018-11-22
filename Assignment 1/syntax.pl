@@ -18,21 +18,27 @@ pvar(X) :- pvars(V), member(X,V).
 %
 exponent(E) :- integer(E), E >= 0.
 
+%% coefficient(K)
+%
+% True if K is a number.
+%
+coefficient(K) :- number(K).
+
 %% power(X)
 %% power(X^Y)
 %
 % True if X is a variable and Y is either omitted 
 % or a non-negative integer
 %
-power(V^E) :- pvar(V), exponent(E).
 power(V)   :- pvar(V).
+power(V^E) :- pvar(V), exponent(E).
 
 %% varpower(VP, V, E)
 %
 % Extracts parts from a var power.
 %
-varpower(V^E, V, E) :- power(V^E).
-varpower(V, V, 1)   :- power(V).
+varpower(V, V, 1)   :- pvar(V).
+varpower(V^E, V, E) :- pvar(V), exponent(E).
 
 %% var_compare(Op, V1, V2)
 %
@@ -45,3 +51,10 @@ var_compare(<, indep, _) :- !.
 var_compare(>, _, indep) :- !.
 var_compare(<, X, Y)     :- X @< Y.
 var_compare(>, X, Y)     :- X @> Y.
+
+
+%% is_negative(K)
+%
+% True if K Is a negative coefficient.
+%
+is_negative(K) :- coefficient(K), K < 0.

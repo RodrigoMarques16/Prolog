@@ -1,0 +1,27 @@
+scale_mono(0, 0, 0).
+scale_mono(0, 1, 0).
+scale_mono(0, -1, 0).
+scale_mono(0, 2, 0).
+
+scale_mono(1, 0, 0).
+scale_mono(1, 1, 1).
+scale_mono(1, -1, -1).
+scale_mono(1, 2, 2).
+
+scale_mono(x, 0, 0).
+scale_mono(x, 1, x).
+scale_mono(x, -1, -x).
+scale_mono(x, 2, 2*x).
+
+scale_mono(-x, 0, 0).
+scale_mono(-x, 1, -x).
+scale_mono(-x, -1, x).
+scale_mono(-x, 2, -2*x).
+
+scale_mono(x^0, 2, 2).
+scale_mono(x^1, 2, 2*x).
+scale_mono(-x^1, 2, -2*x).
+
+scale_mono(2*x^2, 2, 4*x^2).
+scale_mono(-2*x, 2, -4*x).
+scale_mono(-2.5*x, 2, -5.0*x).
