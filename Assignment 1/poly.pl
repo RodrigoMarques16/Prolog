@@ -162,6 +162,7 @@ add_poly_list(P1, P2, P) :-
     sort_poly_list(P1, SP1),
     sort_poly_list(P2, SP2),
     add_poly_list_aux(SP1, SP2, P3), 
+    !,
     simpoly_list(P3, P).
 
 add_poly_list_aux(P, [], P).
