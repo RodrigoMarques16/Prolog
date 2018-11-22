@@ -23,9 +23,7 @@ polynomial(P-M) :- monomial(M), polynomial(P).
 % Transforms a list representing a polynomial and vice-versa.
 %
 poly2list(0, [])  :- !.
-poly2list(M, [M]) :- 
-    monomial(M),
-    !.
+poly2list(M, [M]) :- monomial(M), !.
 
 poly2list(P-M, [M2|L]) :-
     not(nega_mono(M)),
@@ -49,8 +47,10 @@ poly2list(P+M, [M|L]) :-
 % Sorts the polynomial represented as a list. 
 % Merges monomials with the same power.
 %
-sort_poly_list(P, P2) :- 
-    predsort(mono_compare, P, P2), !.
+sort_poly_list(P, P3) :- 
+    predsort(mono_compare, P, P2), 
+    reverse(P2, P3),
+    !.
 
 %% sort_poly(P, P2)
 %
@@ -102,12 +102,14 @@ simpoly_list(P1, P) :-
     simpoly_list_aux(P2, P).
 
 simpoly_list_aux([], []).
-
+simpoly_list_aux([0], []).
+/*
 simpoly_list_aux([M], [M2]) :- 
     normalize_mono(M, N), 
     simmono(N, M2), 
+    M2 \== 0,
     !.
-
+*/
 simpoly_list_aux([M|P], L) :-
     simmono(M, M2),
     simpoly_list_aux(P, P2),
@@ -160,7 +162,6 @@ add_poly_list(P1, P2, P) :-
     sort_poly_list(P1, SP1),
     sort_poly_list(P2, SP2),
     add_poly_list_aux(SP1, SP2, P3), 
-    !,
     simpoly_list(P3, P).
 
 add_poly_list_aux(P, [], P).

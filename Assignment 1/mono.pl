@@ -11,12 +11,11 @@
 %
 monomial(K*X) :- number(K), power(X).
 monomial(X*K) :- number(K), power(X).
-monomial(V)   :- pvar(V).
-monomial(-V)  :- pvar(V).
 monomial(VP)  :- power(VP).
 monomial(-VP) :- power(VP).
 monomial(N)   :- number(N).
-
+%monomial(-V) :- pvar(V).
+%monomial(V)  :- pvar(V).
 
 % monparts(M, K, V^E)
 %
@@ -27,11 +26,14 @@ monparts(-V, -1, V^1)   :- pvar(V).
 monparts(V^E, 1, V^E)   :- power(V^E).
 monparts(-V^E, -1, V^E) :- power(V^E).
 monparts(K, K, indep^1) :- coefficient(K).
-monparts(K*VP, K, V^E)  :- coefficient(K),  varpower(VP, V, E).
-monparts(VP*K, K, V^E)  :- coefficient(K),  varpower(VP, V, E).
 monparts(K*indep, K, indep^1)   :- coefficient(K).
 monparts(K*indep^1, K, indep^1) :- coefficient(K).
-
+monparts(K*VP, K, V^E)  :- 
+    coefficient(K), 
+    varpower(VP, V, E).
+monparts(VP*K, K, V^E)  :- 
+    coefficient(K), 
+    varpower(VP, V, E).
 
 %% normalize_mono(M, M2)
 %
@@ -109,8 +111,8 @@ simmono_aux(M, M).
 
 %% mono_compare(Op, M1, M2)
 %
-% Predicate to use with predsort to sort polymonials and avoid
-% losing similar monomials.
+% Predicate to use with predsort to sort polymonials and 
+% avoid losing similar monomials.
 %
 % True if Op is < and M1 <= M2 or Op is > and M1 > M2
 %
@@ -150,7 +152,7 @@ same_var(M1, M2) :-
 
 %% nega_mono(M)
 %
-% True if M's coefficient is negative.
+% True if M1 is a monomila with negative coefficient. 
 %
 nega_mono(M) :-
     monparts(M, K, _),

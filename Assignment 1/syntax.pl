@@ -52,7 +52,6 @@ var_compare(>, _, indep) :- !.
 var_compare(<, X, Y)     :- X @< Y.
 var_compare(>, X, Y)     :- X @> Y.
 
-
 %% is_negative(K)
 %
 % True if K Is a negative coefficient.
