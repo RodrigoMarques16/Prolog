@@ -1,19 +1,6 @@
-# Logic Programming - Assignment 1
+# TODO List #
 
-## Symbollic Manipulation
-
-Simple program to manipulate polynomials and monomials. It can sum, scale and simplify.
-
-A polynomial is a sum of monomials.
-
-A monomial is of the form `K*X^E`, where `K` is a floating point number and `E` is a positive integer. And `X` belongs to a list of accepted variables: `[w,x,y,z]`; for simplicity in the code.
-
-## Running
-Run program with `swipl poly.pl`
-
-## References
-
-https://github.com/lucach/mvpoli_prolog/ - Comparing monomials
+Status of predicate implementation. Also serves as documentation.
 
 ## Base syntax ##
 
@@ -21,15 +8,13 @@ https://github.com/lucach/mvpoli_prolog/ - Comparing monomials
 
  - **pvar(X)**: True if X is a variable.
   
- - **coefficient(K)**: True if K Is a number.
-  
  - **power(X^Y)**: True if x is a variable and Y is a non-negative integer.
  
  - **varpower(VP, V, E)**: Extract var and exponent from var power. 
 
- - **var_compare(Op, V1, V2)**: Compare variables in lexicographic oredr. Gives 'indep' maximum priority.
+ - **coefficient(K)**: True if K Is a number.
 
-- **is_negative(K)**: True if K is negative.
+ - **var_compare(Op, V1, V2)**: Compare variables in lexicographic oredr. Gives 'indep' maximum priority.
 
 ## Monomials ##
 
@@ -50,9 +35,7 @@ https://github.com/lucach/mvpoli_prolog/ - Comparing monomials
  - **same_power(M1, M2)**: True if M1 and M2 have the same var power.
 
  - **same_var(M1, M2)**: True if M1 and M2 have the same var.
-
- - **nega_mono(M)**: True if M1 is a monomila with negative coefficient. 
-
+  
 ## Polynomials ##
 
  - **polynomial(P)**: True if P is a sum of monomials.
