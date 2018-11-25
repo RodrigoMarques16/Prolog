@@ -11,6 +11,12 @@ Simple program to manipulate polynomials and monomials. This includes:
 
 And other auxiliary predicates.
 
+A polynomial is a sum of monomials.
+
+A monomial is of the form `K*X^E`, where `K` is a floating point number and `E` is a positive integer. And `X` belongs to a list of accepted variables: `[w,x,y,z]`
+
+This can be changed in [syntax.pl](syntax.pl).
+
 ## Running
 
 Run program with `swipl poly.pl`
@@ -20,11 +26,6 @@ Run program with `swipl poly.pl`
 <https://github.com/lucach/mvpoli_prolog/> - Comparing monomials
 
 ## Syntax
-
-A polynomial is a sum of monomials.
-
-A monomial is of the form `K*X^E`, where `K` is a floating point number and `E` is a positive integer. And `X` belongs to a list of accepted variables: `[w,x,y,z]`; This can be changed in [syntax.pl](syntax.pl).
-
 
 - **pvars(L)**: list of variables to be used
 
