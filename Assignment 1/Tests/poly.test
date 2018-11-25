@@ -1,0 +1,31 @@
+once(polynomial(0)).
+once(polynomial(x+x)).
+once(polynomial(x-y)).
+once(polynomial(-x-y-z)).
+once(polynomial(-x+y-z)).
+once(polynomial(-x+y+z)).
+
+poly2list(x+5, [5, x]).
+poly2list(7-z, [-z, 7]).
+poly2list(x+y - z+w, [w, -z, y, x]).
+poly2list(2*x^2 + 5 + y*2, [y*2, 5, 2*x^2]).
+
+sort_poly(x+5, 5+x).
+sort_poly(x+5+y^2+y, 5+x+y+y^2).
+
+reduce_poly(x+x+x+x, 4*x).
+reduce_poly(5+x+7+2*x, 12+3*x).
+
+simpoly(x^2+x-x, x^2).
+simpoly(3*x-2*x, x).
+simpoly(x^0+x, 1+x).
+simpoly(0*x-y*0, 0).
+
+scalepoly(x^2+10+5-y+3*z^3, 0, 0).
+scalepoly(x^2+10+5-y+3*z^3, 1, 15+x^2-y+3*z^3).
+scalepoly(x^2+10+5-y+3*z^3, -1, -15-x^2+y-3*z^3).
+scalepoly(x^2+10+5-y+3*z^3, 2, 30+2*x^2-2*y+6*z^3).
+
+addpoly(x+x^2,-x-x^2, 0).
+addpoly(0+y+z, x+1*y+2*z, x+2*y+3*z).
+addpoly(x^2+10+5-y+3*z^3, -2*x^2-10+2*y+2*z^2, 5-x^2+y+2*z^2+3*z^3).

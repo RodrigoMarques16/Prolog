@@ -1,0 +1,13 @@
+pvar(x).
+pvar(var).
+not(pvar(-x)).
+
+exponent(0).
+exponent(1).
+not(exponent(-1)).
+
+coefficient(5).
+coefficient(-5).
+
+varpower(x^5, x, 5).
+varpower(y^0, y, 0).

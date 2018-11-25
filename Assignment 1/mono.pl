@@ -9,8 +9,8 @@
 %   - Coefficient * Var power: K * x^Exp
 %   - Var Power * Coefficient: x^Exp * K
 %
-monomial(K*X) :- number(K), power(X).
-monomial(X*K) :- number(K), power(X).
+monomial(K*X) :- coefficient(K), power(X).
+monomial(X*K) :- coefficient(K), power(X).
 monomial(VP)  :- power(VP).
 monomial(-VP) :- power(VP).
 monomial(N)   :- number(N).
@@ -21,34 +21,30 @@ monomial(N)   :- number(N).
 %
 % Extract parts from monomial
 %
-monparts(V, 1, V^1)     :- pvar(V).
-monparts(-V, -1, V^1)   :- pvar(V).
-monparts(V^E, 1, V^E)   :- power(V^E).
-monparts(-V^E, -1, V^E) :- power(V^E).
-monparts(K, K, indep^1) :- coefficient(K).
+monparts(V, 1, V^1)             :- pvar(V).
+monparts(-V, -1, V^1)           :- pvar(V).
+monparts(V^E, 1, V^E)           :- power(V^E).
+monparts(-V^E, -1, V^E)         :- power(V^E).
+monparts(K, K, indep^1)         :- coefficient(K).
 monparts(K*indep, K, indep^1)   :- coefficient(K).
 monparts(K*indep^1, K, indep^1) :- coefficient(K).
-monparts(K*VP, K, V^E)  :- 
-    coefficient(K), 
-    varpower(VP, V, E).
-monparts(VP*K, K, V^E)  :- 
-    coefficient(K), 
-    varpower(VP, V, E).
+monparts(K*VP, K, V^E)          :- coefficient(K), varpower(VP, V, E).
+monparts(VP*K, K, V^E)          :- coefficient(K), varpower(VP, V, E).
 
 %% normalize_mono(M, M2)
 %
 % Transform a monomial in the form:
 %   - Coefficient * Var ^ Exponent
 %
-% Reverses simplification.
-%
 normalize_mono(M, M2) :-
-    monparts(M,K,indep^1),
-    M2 = K, !.
+    monparts(M, K, indep^1),
+    M2 = K, 
+    !.
 
 normalize_mono(M, M2) :-
-    monparts(M,K,VP), 
-    M2 = K*VP, !.
+    monparts(M, K, VP), 
+    M2 = K*VP, 
+    !.
 
 %% addmono(M1, M2, M3)
 % 
@@ -78,7 +74,7 @@ addmono(M1, M2, M) :-
 %
 % True if M2 is M1 multiplied by the scalar K.
 %
-scale_mono(M1, K, M3) :-
+scalemono(M1, K, M3) :-
     monparts(M1, K1, VP),
     K2 is K * K1,
     M2 = K2 * VP, 

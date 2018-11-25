@@ -3,6 +3,14 @@
 %
 % Symbollic Manipulation
 %
+% A simple program to manipulate polynomials. This includes:
+%  - Simplification;
+%  - Addition;
+%  - Scaling.
+% And more.
+%
+% The only 
+%
 % Rodrigo Marques - 201605427
 %
 
@@ -27,13 +35,13 @@ poly2list(M, [M]) :- monomial(M), !.
 
 poly2list(P-M, [M2|L]) :-
     not(nega_mono(M)),
-    scale_mono(M, -1, M2),
+    scalemono(M, -1, M2),
     poly2list(P, L), 
     !.
 
 poly2list(P-M, [M2|L]) :-
     nega_mono(M2),
-    scale_mono(M2, -1, M),
+    scalemono(M2, -1, M),
     poly2list(P, L), 
     !.
 
@@ -63,34 +71,34 @@ sort_poly(P, P2) :-
     poly2list(P2, L2), 
     !.
 
-%% compress_poly_list(P, P2)
+%% reduce_poly_list(P, P2)
 % 
 % Sum together all monomials with the same var power in a
 % polynomial.
 %
-compress_poly_list(P, P3) :-
+reduce_poly_list(P, P3) :-
     sort_poly_list(P, P2),
-    compress_poly_list_aux(P2, P3), 
+    reduce_poly_list_aux(P2, P3), 
     !.
 
-compress_poly_list_aux([], []).
-compress_poly_list_aux([M], [M]). 
-compress_poly_list_aux([M1,M2|P], P2) :-
+reduce_poly_list_aux([], []).
+reduce_poly_list_aux([M], [M]). 
+reduce_poly_list_aux([M1,M2|P], P2) :-
     same_power(M1, M2),
     addmono(M1, M2, M),
-    compress_poly_list([M|P], P2).
+    reduce_poly_list([M|P], P2).
 
-compress_poly_list_aux([M|P], [M|P2]) :-
-    compress_poly_list(P, P2). 
+reduce_poly_list_aux([M|P], [M|P2]) :-
+    reduce_poly_list(P, P2). 
 
-%% compress_poly(P, P2)
+%% reduce_poly(P, P2)
 %
 % Sum together all monomials with the same var power in a
 % polynomial.
 %
-compress_poly(P, P2) :-
+reduce_poly(P, P2) :-
     poly2list(P, L),
-    compress_poly_list(L, L2),
+    reduce_poly_list(L, L2),
     poly2list(P2, L2).   
 
 %% simpoly_list(P, P2)
@@ -98,7 +106,7 @@ compress_poly(P, P2) :-
 % Simplify a polynomial represented as a list of monomials.
 %
 simpoly_list(P1, P) :-
-    compress_poly_list(P1, P2),
+    reduce_poly_list(P1, P2),
     simpoly_list_aux(P2, P).
 
 simpoly_list_aux([], []).
@@ -137,12 +145,12 @@ scale_poly_list(P1, K, P) :-
     simpoly_list(P2, P).
 
 scale_poly_list_aux([M1], K, [M2]) :-
-    scale_mono(M1, K, M2), 
+    scalemono(M1, K, M2), 
     !.
 
 scale_poly_list_aux([M1|P1], K, [M2|P2]) :-
     scale_poly_list_aux(P1, K, P2), 
-    scale_mono(M1, K, M2),
+    scalemono(M1, K, M2),
     !.
 
 %% scalepoly(P1, K, P2)
@@ -152,6 +160,7 @@ scale_poly_list_aux([M1|P1], K, [M2|P2]) :-
 scalepoly(P1, K, P) :-
     poly2list(P1, L),
     scale_poly_list(L, K, L2),
+    !,
     poly2list(P, L2).
 
 % add_poly_list(P1, P2, P)
@@ -194,4 +203,5 @@ addpoly(P1, P2, P) :-
     poly2list(P1, L1),
     poly2list(P2, L2),
     add_poly_list(L1, L2, L), 
+    !,
     poly2list(P, L).

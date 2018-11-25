@@ -1,0 +1,37 @@
+once(monomial(0)).
+once(monomial(x)).
+once(monomial(x^5)).
+once(monomial(2*x^2)).
+
+once(monparts(0, 0, indep^1)).
+once(monparts(2, 2, indep^1)).
+once(monparts(x, 1, x^1)).
+once(monparts(-x, -1, x^1)).
+once(monparts(2*x^3, 2, x^3)).
+once(monparts(2*x^3, 2, x^3)).
+
+normalize_mono(5*indep^1, 5).
+normalize_mono(x, 1*x^1).
+normalize_mono(-x, -1*x^1).
+
+addmono(x, 5, x+5).
+addmono(x,x, 2*x).
+addmono(x, y, x+y).
+addmono(2*x, 2*x, 4*x).
+addmono(x^1, 1*x^2, x^1+1*x^2).
+
+scalemono(x, 0, 0).
+scalemono(x, 1, x).
+scalemono(-x, -1, x).
+scalemono(x, 2, 2*x).
+scalemono(5, 2, 10).
+scalemono(2*x, 4, 8*x).
+scalemono(-2.5*x, 2, -5.0*x).
+
+simmono(x^0, 1).
+simmono(x^1, x).
+simmono(-1*x, -x).
+simmono(1*x^1, x).
+simmono(-1*x^0, -1).
+simmono(5*indep^1, 5).
+simmono(0*x, 0).

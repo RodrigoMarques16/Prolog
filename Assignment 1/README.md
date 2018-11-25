@@ -2,18 +2,27 @@
 
 ## Symbollic Manipulation
 
-Simple program to manipulate polynomials and monomials. It can sum, scale and simplify.
+Simple program to manipulate polynomials and monomials. This includes: 
+ - Addition;
+ - Scaling;
+ - Simplification;
+ - Sorting.
+And other auxiliary predicates.
 
 A polynomial is a sum of monomials.
 
-A monomial is of the form `K*X^E`, where `K` is a floating point number and `E` is a positive integer. And `X` belongs to a list of accepted variables: `[w,x,y,z]`; for simplicity in the code.
+A monomial is of the form `K*X^E`, where `K` is a floating point number and `E` is a positive integer. And `X` belongs to a list of accepted variables: `[w,x,y,z]`; This can be changed in [syntax.pl](syntax.pl).
 
 ## Running
+
 Run program with `swipl poly.pl`
 
 ## References
 
 https://github.com/lucach/mvpoli_prolog/ - Comparing monomials
+
+
+# Documentation #
 
 ## Base syntax ##
 
@@ -61,7 +70,7 @@ https://github.com/lucach/mvpoli_prolog/ - Comparing monomials
 
  - **sort_poly_list(P, P2)** and **sort_poly(P, P2)**: Sort a polynomial given as a list.
 
- - **compress_poly_list(P, P2)** and **compress_poly(P, P2)**: Sum together all monomials with the same var power in a polynomial.
+ - **reduce_poly_list(P, P2)** and **reduce_poly(P, P2)**: Sum together all monomials with the same var power in a polynomial.
 
  - **simpoly_list(P, P2)** and **simpoly(P, P2)**: Simplify a polymonial.
   
