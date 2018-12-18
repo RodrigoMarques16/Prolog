@@ -31,7 +31,7 @@ Parses the given polynomial, useful for storing.
 
 `> show Poly`
 
-ex: `> show two x squared as P1`
+ex: `show two x squared as P1`
 
 Stored polynomials can be seen with:
 
@@ -43,7 +43,7 @@ Remove a stored variable.
 
 `> forget Var`
 
-ex: `> forget P1`
+ex: `forget P1`
 
 ### add (alias: sum)
 
