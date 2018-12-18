@@ -21,6 +21,8 @@ Start demo with `polyplay.`
 
 ## Commands
 
+A prompt with all commands and usage can be brought up with `help` or `commands`.
+
 `command args [as Var]`
 
 [as Var] is an optional argument for storing the result in a variable for later use.
