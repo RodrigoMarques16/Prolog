@@ -1,5 +1,6 @@
 :-consult(parser).
 
+
 %% text2poly(+Str, -Poly)
 %
 % Takes a polynom in text form and coverts it
@@ -7,7 +8,7 @@
 %
 text2poly(Str, Poly) :-
     split_string(Str, " ", "", List),
-    poly(Poly, List, []), 
+    phrase(poly(Poly), List),
     !.
 
 % polyplay
@@ -16,6 +17,9 @@ text2poly(Str, Poly) :-
 %
 polyplay :- 
     prompt,
+    polyplay_aux.
+
+polyplay_aux :- 
     readInput(Input),
     testInput(Input), 
     !.
@@ -46,11 +50,11 @@ testInput(["bye"])  :- writeBye.
 testInput(Input)  :- 
     phrase(parse(Result), Input, []),
     writeln(Result),
-    polyplay.
+    polyplay_aux.
 
 testInput(_) :- 
     writeError, 
-    polyplay.
+    polyplay_aux.
 
 % Write predicates
 writeBye   :- writeln("See ya").

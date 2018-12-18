@@ -19,7 +19,7 @@ This can be changed in [syntax.pl](syntax.pl).
 
 ## Running
 
-Run program with `swipl poly.pl`
+Run program with `swipl demo.pl`
 
 ## References
 
@@ -35,7 +35,7 @@ Run program with `swipl poly.pl`
   
 - **power(X^Y)**: True if x is a variable and Y is a non-negative integer.
 
-- **varpower(VP, V, E)**: Extract var and exponent from var power. 
+- **varpower(VP, V, E)**: Extract var and exponent from var power.
 
 - **var_compare(Op, V1, V2)**: Compare variables in lexicographic oredr. Gives 'indep' maximum priority.
 
@@ -45,7 +45,7 @@ Run program with `swipl poly.pl`
 
 - **monomial(M)**: True if M is a monomial.
 
-- **monparts(M, K, V^E)**: Extracts coefficient, var and exponent from a monomial. 
+- **monparts(M, K, V^E)**: Extracts coefficient, var and exponent from a monomial.
 
 - **normalize_mono(M, M2)**: Transforms M into the form Coefficient*Var^Exponent
 
@@ -61,13 +61,13 @@ Run program with `swipl poly.pl`
 
 - **same_var(M1, M2)**: True if M1 and M2 have the same var.
 
-- **nega_mono(M)**: True if M1 is a monomila with negative coefficient. 
+- **nega_mono(M)**: True if M1 is a monomila with negative coefficient.
 
 ## Polynomials
 
 - **polynomial(P)**: True if P is a sum of monomials.
 
-- **poly2list(P, L)**: Transforms polynomials into lists and vice-versa. 
+- **poly2list(P, L)**: Transforms polynomials into lists and vice-versa.
 
 - **sort_poly_list(P, P2)** and **sort_poly(P, P2)**: Sort a polynomial given as a list.
 

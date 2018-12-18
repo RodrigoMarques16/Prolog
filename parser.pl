@@ -17,7 +17,7 @@ command(Var = Result) --> show_command, var(Var),
     { value(Var, Result) }.
 command(Result) --> show_command, ["stored"], (["polynomials"]; []),
     % TODO: filter out environment vars
-    { findall(Var=Value, nb_current(Var,Value), Result) }.
+    { findall(Var=Value, getVar(Var, Value), Result) }.
 
 command(Result) --> sim_command, poly_or_var(Poly),
     { simpoly(Poly, Result) }.
@@ -36,28 +36,58 @@ command(Result) --> del_command, var(Var),
 command(Result) --> help_command, 
     { helpString(Result) }.
 
+getVar(Var, Value) :-
+    value(Var, Value), 
+    Value \= [].
+
 % Commands --------------------------------------
+optional_poly -->  (["polynomial"]; []).
 
-show_command --> ["show"].
-add_command  --> ["add"];      ["sum"].
-mult_command --> ["multiply"]; ["scale"].
-sim_command  --> ["simplify"]; ["simple"].
-help_command --> ["help"];     ["commands"].
-del_command  --> ["forget"];   ["remove"];   ["delete"].
+show_command --> 
+    ["show"], optional_poly.
 
-add_op --> ["to"]; ["with"]; ["and"].
-mult_op --> ["by"].
+add_command  --> 
+    (["add"]; ["sum"]), optional_poly.
+
+mult_command --> 
+    (["multiply"]; ["scale"]), optional_poly.
+
+sim_command  --> 
+    (["simplify"]; ["simple"]), optional_poly.
+
+help_command --> 
+    ["help"]; ["commands"].
+
+del_command  --> 
+    ["forget"]; ["remove"]; ["delete"].
+
+add_op --> 
+    (["to"]; ["with"]; ["and"]), optional_poly.
+
+mult_op --> 
+    ["by"], optional_poly.
+
 save_op --> 
     ["as"];
     (["store"], ["to"]).
 
 % Poly/Mono -------------------------------------
-
 poly(Mono) --> mono(Mono).
-poly(Mono+Poly) --> mono(Mono), poly_op(plus),  poly(Poly).
-poly(Mono-Poly) --> mono(Mono), poly_op(minus), poly(Poly).
 
-mono(K) --> num(K).
+% no recursion, but gives polynomials in the form Poly+(Poly+(Poly+(...)))
+% the implementation at poly.pl can't parse polynomials as a sum of polynomials
+% and doing that isn't really the point
+%poly(Mono+Poly) --> mono(Mono), poly_op(plus),  poly(Poly).
+%poly(Mono-Poly) --> mono(Mono), poly_op(minus), poly(Poly).
+
+% building polynomials like this circumvents chaining, but they
+% have to be flipped around to prevent left recursion
+% not a pretty hack
+poly(Poly+Mono) --> mono(Mono), poly_op(plus), poly(Poly).
+poly(PolyMinus+Mono) --> mono(Mono), poly_op(minus), poly(Poly), 
+    { scalepoly(Poly, -1, PolyMinus) }.
+
+mono(K) --> coeff(K).
 mono(V) --> myvar(V).
 mono(K*V) --> coeff(K), myvar(V).
 mono(V^E) --> myvar(V), power(E).
@@ -65,10 +95,10 @@ mono(K*V^E) --> coeff(K), myvar(V), power(E).
 
 % Syntax ------------------------------------------
 
-coeff(K) --> num(K), mono_op(times).
-coeff(K) --> num(K).
+coeff(K) --> num(K), (mono_op(times); []).
+%coeff(K) --> num(K).
 
-power(E) --> mono_op(power), num(E).
+power(E) --> mono_op(power), num(E), { exponent(E) }.
 power(2) --> ["squared"].
 power(3) --> ["cubed"].
 
@@ -102,6 +132,7 @@ num(I) --> string([Str]),
 
 % A written number
 num(I) --> dig(I).
+dig(0) --> ["zero"].
 dig(1) --> ["one"].
 dig(2) --> ["two"].
 dig(3) --> ["three"].
@@ -116,7 +147,7 @@ dig(9) --> ["nine"].
 helpString('Instructions
 
 All commands are of the form
-    command [args] [as Var]
+    command args [as Var]
 Where [as Var] is optional and saves the result to Var
 
 Command List
